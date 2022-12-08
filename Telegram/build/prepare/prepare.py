@@ -728,9 +728,8 @@ win:
 """)
 
 stage('ffmpeg', """
-    git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
+    git clone -b n5.1.2 https://github.com/FFmpeg/FFmpeg.git ffmpeg
     cd ffmpeg
-    git checkout cc33e73618
 win:
     SET PATH_BACKUP_=%PATH%
     SET PATH=%ROOT_DIR%\\ThirdParty\\msys64\\usr\\bin;%PATH%
