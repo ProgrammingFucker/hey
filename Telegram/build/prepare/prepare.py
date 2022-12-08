@@ -397,7 +397,7 @@ if customRunCommand:
 stage('patches', """
     git clone https://github.com/desktop-app/patches.git
     cd patches
-    git checkout e1117dfb86
+    git checkout 92f4ee3867
 """)
 
 stage('msys64', """
@@ -1062,30 +1062,30 @@ release:
 """)
 
 if buildQt5:
-    stage('qt_5_15_4', """
-    git clone https://code.qt.io/qt/qt5.git qt_5_15_4
-    cd qt_5_15_4
+    stage('qt_5_15_7', """
+    git clone https://code.qt.io/qt/qt5.git qt_5_15_7
+    cd qt_5_15_7
     perl init-repository --module-subset=qtbase,qtimageformats,qtsvg
-    git checkout v5.15.4-lts-lgpl
+    git checkout v5.15.7-lts-lgpl
     git submodule update qtbase qtimageformats qtsvg
-depends:patches/qtbase_5_15_4/*.patch
+depends:patches/qtbase_5_15_7/*.patch
     cd qtbase
 win:
-    for /r %%i in (..\\..\\patches\\qtbase_5_15_4\\*) do git apply %%i
+    for /r %%i in (..\\..\\patches\\qtbase_5_15_7\\*) do git apply %%i
     cd ..
 
     SET CONFIGURATIONS=-debug
 release:
     SET CONFIGURATIONS=-debug-and-release
 win:
-    """ + removeDir("\"%LIBS_DIR%\\Qt-5.15.4\"") + """
+    """ + removeDir("\"%LIBS_DIR%\\Qt-5.15.7\"") + """
     SET ANGLE_DIR=%LIBS_DIR%\\tg_angle
     SET ANGLE_LIBS_DIR=%ANGLE_DIR%\\out
     SET MOZJPEG_DIR=%LIBS_DIR%\\mozjpeg
     SET OPENSSL_DIR=%LIBS_DIR%\\openssl
     SET OPENSSL_LIBS_DIR=%OPENSSL_DIR%\\out
     SET ZLIB_LIBS_DIR=%LIBS_DIR%\\zlib
-    configure -prefix "%LIBS_DIR%\\Qt-5.15.4" ^
+    configure -prefix "%LIBS_DIR%\\Qt-5.15.7" ^
         %CONFIGURATIONS% ^
         -force-debug-info ^
         -opensource ^
@@ -1116,14 +1116,14 @@ win:
     jom -j16
     jom -j16 install
 mac:
-    find ../../patches/qtbase_5_15_4 -type f -print0 | sort -z | xargs -0 git apply
+    find ../../patches/qtbase_5_15_7 -type f -print0 | sort -z | xargs -0 git apply
     cd ..
 
     CONFIGURATIONS=-debug
 release:
     CONFIGURATIONS=-debug-and-release
 mac:
-    ./configure -prefix "$USED_PREFIX/Qt-5.15.4" \
+    ./configure -prefix "$USED_PREFIX/Qt-5.15.7" \
         $CONFIGURATIONS \
         -force-debug-info \
         -opensource \
