@@ -108,6 +108,10 @@ jobs:
           restore-keys: ${{ runner.OS }}-${{ matrix.arch }}-libs-
 
       - name: Libraries.
+        shell: bash
+        run: rm -rf Libraries && mkdir Libraries
+
+      - name: Libraries.
         env:
           GYP_MSVS_OVERRIDE_PATH: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\'
           GYP_MSVS_VERSION: 2022
